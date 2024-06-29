@@ -6,7 +6,7 @@ import (
 
 var DefaultContainer DIContainer = NewBaseContainer()
 
-func RegisterType[Abstract any, Concrete InitializableDependency]() {
+func RegisterType[Abstract any, Concrete any]() {
 	DefaultContainer.RegisterType(
 		reflect.TypeFor[Abstract](),
 		reflect.TypeFor[Concrete](),
