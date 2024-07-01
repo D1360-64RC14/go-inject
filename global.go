@@ -4,6 +4,8 @@ import (
 	"reflect"
 )
 
+// DefaultContainer holds the container used when calling the global functions.
+// It can be reassigned to a different container if needed.
 var DefaultContainer DIContainer = NewBaseContainer()
 
 // RegisterType of an abstract type to a concrete type inside the DI container
