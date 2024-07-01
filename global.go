@@ -54,8 +54,8 @@ func Register[Abstract any](obj Abstract) {
 // Inject into the given variable reference the instance of some pre-registered
 // Concrete type or instance from the DI container.
 //
-// If the Concrete type isn't instantiated yet, it will be instantiated. And if
-// the Concrete type implements the [InitializableDependency] interface, the
+// If the Concrete type isn't instantiated yet, it will be instantiated. Or if
+// it implements the [InitializableDependency] interface, the
 // [InitializableDependency.Initialize] method will be called.
 //
 //	var bookRepo BookRepository
