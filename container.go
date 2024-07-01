@@ -13,7 +13,7 @@ type DIContainer interface {
 }
 
 // InitializableDependency declares the [InitializableDependency.Initialize]
-// contract that can be called during the registration process by the [DefaultContainer].
+// contract that can be called during the registration process by the [BaseContainer].
 type InitializableDependency interface {
 	Initialize()
 }
