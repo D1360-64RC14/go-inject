@@ -89,10 +89,8 @@ func TestRegister(t *testing.T) {
 
 func TestInject(t *testing.T) {
 	t.Run("Normal execution", func(t *testing.T) {
-		var inst TestA
-
 		err := recoverPanic(func() {
-			goinject.Inject(&inst)
+			_ = goinject.Inject[TestA]()
 		})
 
 		if err != nil {
@@ -101,10 +99,8 @@ func TestInject(t *testing.T) {
 	})
 
 	t.Run("Wrong abstract type", func(t *testing.T) {
-		var inst *TestAImpl
-
 		err := recoverPanic(func() {
-			goinject.Inject(&inst)
+			_ = goinject.Inject[*TestAImpl]()
 		})
 
 		if !errors.Is(err, goinject.ErrNotAnInterface) {
@@ -116,7 +112,59 @@ func TestInject(t *testing.T) {
 		var inst TestA
 
 		err := recoverPanic(func() {
-			goinject.Inject(&inst)
+			inst = goinject.Inject[TestA]()
+		})
+
+		if inst == nil {
+			t.Errorf("expected instance, got nil")
+		}
+
+		if err != nil {
+			t.Errorf("unexpected error: '%v'", err)
+		}
+	})
+
+	t.Run("Not registered type", func(t *testing.T) {
+		err := recoverPanic(func() {
+			_ = goinject.Inject[TestE]()
+		})
+
+		if !errors.Is(err, goinject.ErrNoConcreteTypeSupplied) {
+			t.Errorf("expected error: '%v', got '%v'", goinject.ErrNoConcreteTypeSupplied, err)
+		}
+	})
+}
+
+func TestInjectAt(t *testing.T) {
+	t.Run("Normal execution", func(t *testing.T) {
+		var inst TestA
+
+		err := recoverPanic(func() {
+			goinject.InjectAt(&inst)
+		})
+
+		if err != nil {
+			t.Errorf("unexpected error: '%v'", err)
+		}
+	})
+
+	t.Run("Wrong abstract type", func(t *testing.T) {
+		var inst *TestAImpl
+
+		err := recoverPanic(func() {
+			goinject.InjectAt(&inst)
+		})
+
+		if !errors.Is(err, goinject.ErrNotAnInterface) {
+			t.Errorf("expected error: '%v', got '%v'", goinject.ErrNotAnInterface, err)
+		}
+	})
+
+	t.Run("Injected object", func(t *testing.T) {
+		var inst TestA
+
+		err := recoverPanic(func() {
+			goinject.InjectAt(&inst)
 		})
 
 		if inst == nil {
@@ -132,7 +180,7 @@ func TestInject(t *testing.T) {
 		var inst TestE
 
 		err := recoverPanic(func() {
-			goinject.Inject(&inst)
+			goinject.InjectAt(&inst)
 		})
 
 		if !errors.Is(err, goinject.ErrNoConcreteTypeSupplied) {

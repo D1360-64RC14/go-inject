@@ -18,25 +18,19 @@ func main() {
 }
 
 func print() {
-	var p Printer
-
-	goinject.Inject(&p)
+	p := goinject.Inject[Printer]()
 
 	p.Print("Diego")
 }
 
 func printAgain() {
-	var p Printer
-
-	goinject.Inject(&p)
+	p := goinject.Inject[Printer]()
 
 	p.Print("Garcia")
 }
 
 func printUses() {
-	var p Printer
-
-	goinject.Inject(&p)
+	p := goinject.Inject[Printer]()
 
 	if lp, ok := p.(*LoremPrinter); ok {
 		fmt.Println(lp.uses)

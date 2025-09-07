@@ -58,16 +58,27 @@ func Register[Abstract any](obj Abstract) {
 	)
 }
 
-// Inject into the given variable reference the instance of some pre-registered
-// Concrete type or instance from the DI container.
+// Inject the instance of some pre-registered Concrete type from the DI container.
 //
-// If the Concrete type isn't instantiated yet, it will be instantiated. Or if
-// it implements the [InitializableDependency] interface, the
-// [InitializableDependency.Initialize] method will be called.
+// The Concrete type will be instantiated if it isn't already. Or the
+// [InitializableDependency.Initialize] method will be called if it
+// implements the [InitializableDependency] interface.
+//
+//	var bookRepo BookRepository = goinject.Inject[BookRepository](&bookRepo)
+func Inject[Abstract any]() Abstract {
+	return DefaultContainer.Inject(reflect.TypeFor[Abstract]()).(Abstract)
+}
+
+// InjectAt the given variable reference the instance of some pre-registered
+// Concrete type from the DI container.
+//
+// The Concrete type will be instantiated if it isn't already. Or the
+// [InitializableDependency.Initialize] method will be called if it
+// implements the [InitializableDependency] interface.
 //
 //	var bookRepo BookRepository
 //
-//	goinject.Inject(&bookRepo)
-func Inject[Abstract any](obj *Abstract) {
+//	goinject.InjectAt(&bookRepo)
+func InjectAt[Abstract any](obj *Abstract) {
 	*obj = DefaultContainer.Inject(reflect.TypeFor[Abstract]()).(Abstract)
 }
