@@ -8,11 +8,11 @@ import (
 // It can be reassigned to a different container if needed.
 var DefaultContainer DIContainer = NewBaseContainer()
 
-// RegisterType of an abstract type to a concrete type inside the DI container
-// that can be injected later.
+// RegisterType of an abstract type to a concrete type inside the DI container,
+// to be injected later.
 //
-// The Abstract type must be an interface, and the Concrete type must be a struct
-// type that must implement the interface.
+// The Abstract type must be an interface, and the Concrete type must be a
+// struct type that implements the interface.
 //
 //	type BookRepository interface {
 //		Get() []int
@@ -22,6 +22,11 @@ var DefaultContainer DIContainer = NewBaseContainer()
 //	type MySQLBookRepository struct {}
 //
 //	goinject.RegisterType[BookRepository, MySQLBookRepository]()
+//
+// The Concrete type will be instantiated when injected if it isn't already.
+// If the Concrete type implements the [InitializableDependency] interface, the
+// [InitializableDependency.Initialize] method will be called to
+// instantiate it.
 func RegisterType[Abstract any, Concrete any]() {
 	DefaultContainer.RegisterType(
 		reflect.TypeFor[Abstract](),
@@ -29,14 +34,14 @@ func RegisterType[Abstract any, Concrete any]() {
 	)
 }
 
-// Register an abstract type to a concrete instance inside the DI container that
-// can be injected later.
+// Register an abstract type to a concrete instance inside the DI container,
+// to be injected later.
 //
 // The Abstract type must be an interface, and the object instance must be the
 // type of a struct that implements the interface.
 //
-// Always specify the Abstract type, or the Concrete type will be inferred, and
-// a panic will occur.
+// Always specify the Abstract type, or a struct type will be inferred,
+// resulting in a panic.
 //
 //	type BookRepository interface {
 //		Get() []int
