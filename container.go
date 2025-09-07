@@ -12,8 +12,9 @@ type DIContainer interface {
 	Inject(abstractType reflect.Type) any
 }
 
-// InitializableDependency declares the [InitializableDependency.Initialize]
-// contract that can be called during the registration process by the [BaseContainer].
+// InitializableDependency declares the
+// [InitializableDependency.InitializeDependency] contract that can be called
+// during the registration process by the [BaseContainer].
 type InitializableDependency interface {
-	Initialize()
+	InitializeDependency()
 }

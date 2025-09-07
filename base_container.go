@@ -85,7 +85,7 @@ func (i *BaseContainer) Inject(abstractType reflect.Type) any {
 		i.instances[abstractType] = instance
 
 		if dInstance, ok := instance.(InitializableDependency); ok {
-			dInstance.Initialize()
+			dInstance.InitializeDependency()
 		}
 	}
 

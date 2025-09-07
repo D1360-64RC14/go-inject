@@ -32,18 +32,18 @@ type TestCImpl struct {
 type TestDImpl struct{}
 type TestEImpl struct{}
 
-func (a *TestAImpl) Initialize() {}
-func (a *TestAImpl) TestA()      {}
-func (b *TestBImpl) TestB()      {}
-func (a *TestCImpl) Initialize() {
+func (a *TestAImpl) InitializeDependency() {}
+func (a *TestAImpl) TestA()                {}
+func (b *TestBImpl) TestB()                {}
+func (a *TestCImpl) InitializeDependency() {
 	a.Executed = true
 }
-func (a *TestCImpl) TestC()      {}
-func (a *TestDImpl) Initialize() {}
-func (a *TestDImpl) TestD()      {}
-func (a *TestEImpl) Initialize() {}
-func (a *TestEImpl) TestE()      {}
-func (a *TestEImpl) TestA()      {}
+func (a *TestCImpl) TestC()                {}
+func (a *TestDImpl) InitializeDependency() {}
+func (a *TestDImpl) TestD()                {}
+func (a *TestEImpl) InitializeDependency() {}
+func (a *TestEImpl) TestE()                {}
+func (a *TestEImpl) TestA()                {}
 
 func TestBaseInjector(t *testing.T) {
 	t.Run("RegisterType", func(t *testing.T) {

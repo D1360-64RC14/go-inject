@@ -25,7 +25,7 @@ var DefaultContainer DIContainer = NewBaseContainer()
 //
 // The Concrete type will be instantiated when injected if it isn't already.
 // If the Concrete type implements the [InitializableDependency] interface, the
-// [InitializableDependency.Initialize] method will be called to
+// [InitializableDependency.InitializeDependency] method will be called to
 // instantiate it.
 func RegisterType[Abstract any, Concrete any]() {
 	DefaultContainer.RegisterType(
@@ -61,7 +61,7 @@ func Register[Abstract any](obj Abstract) {
 // Inject the instance of some pre-registered Concrete type from the DI container.
 //
 // The Concrete type will be instantiated if it isn't already. Or the
-// [InitializableDependency.Initialize] method will be called if it
+// [InitializableDependency.InitializeDependency] method will be called if it
 // implements the [InitializableDependency] interface.
 //
 //	var bookRepo BookRepository = goinject.Inject[BookRepository](&bookRepo)
@@ -73,7 +73,7 @@ func Inject[Abstract any]() Abstract {
 // Concrete type from the DI container.
 //
 // The Concrete type will be instantiated if it isn't already. Or the
-// [InitializableDependency.Initialize] method will be called if it
+// [InitializableDependency.InitializeDependency] method will be called if it
 // implements the [InitializableDependency] interface.
 //
 //	var bookRepo BookRepository
