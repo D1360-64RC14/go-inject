@@ -9,19 +9,19 @@ import (
 )
 
 type TestA interface {
-	TestA()
+	MethodTestA()
 }
 type TestB interface {
-	TestB()
+	MethodTestB()
 }
 type TestC interface {
-	TestC()
+	MethodTestC()
 }
 type TestD interface {
-	TestD()
+	MethodTestD()
 }
 type TestE interface {
-	TestE()
+	MethodTestE()
 }
 
 type TestAImpl struct{}
@@ -33,17 +33,17 @@ type TestDImpl struct{}
 type TestEImpl struct{}
 
 func (a *TestAImpl) InitializeDependency() {}
-func (a *TestAImpl) TestA()                {}
-func (b *TestBImpl) TestB()                {}
-func (a *TestCImpl) InitializeDependency() {
-	a.Executed = true
+func (a *TestAImpl) MethodTestA()          {}
+func (b *TestBImpl) MethodTestB()          {}
+func (c *TestCImpl) InitializeDependency() {
+	c.Executed = true
 }
-func (a *TestCImpl) TestC()                {}
-func (a *TestDImpl) InitializeDependency() {}
-func (a *TestDImpl) TestD()                {}
-func (a *TestEImpl) InitializeDependency() {}
-func (a *TestEImpl) TestE()                {}
-func (a *TestEImpl) TestA()                {}
+func (c *TestCImpl) MethodTestC()          {}
+func (d *TestDImpl) InitializeDependency() {}
+func (d *TestDImpl) MethodTestD()          {}
+func (e *TestEImpl) InitializeDependency() {}
+func (e *TestEImpl) MethodTestE()          {}
+func (e *TestEImpl) MethodTestA()          {}
 
 func TestBaseInjector(t *testing.T) {
 	t.Run("RegisterType", func(t *testing.T) {
@@ -79,7 +79,7 @@ func TestBaseInjector(t *testing.T) {
 			}
 
 			err = recoverPanic(func() {
-				test.TestA()
+				test.MethodTestA()
 			})
 			if err != nil {
 				t.Errorf("unexpected error: '%v'", err)
@@ -211,7 +211,7 @@ func TestBaseInjector(t *testing.T) {
 				}
 
 				err = recoverPanic(func() {
-					gotTestAInstance.TestA()
+					gotTestAInstance.MethodTestA()
 				})
 
 				if err != nil {
